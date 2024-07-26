@@ -18,7 +18,7 @@ app.use(
         ? "*" // This might give CORS error for some origins due to credentials set to true
         : process.env.CORS_ORIGIN?.split(","), // For multiple cors origin for production. Refer https://github.com/hiteshchoudhary/apihub/blob/a846abd7a0795054f48c7eb3e71f3af36478fa96/.env.sample#L12C1-L12C12
     credentials: true,
-  })
+  })   
 );
 
 app.use(express.json({ limit: "16kb" }));
@@ -29,8 +29,10 @@ app.use(morganMiddleware);
 
 //Define all API's needed for the APP here
 import eventRouter from "./routes/event.routes.js";
+import packageRouter from "./routes/package.routes.js";
 
 app.use("/api/allevents", eventRouter);
+app.use("/api/allpackages", packageRouter);
 
 // Default home page route
 app.use("/", (req, res) => {

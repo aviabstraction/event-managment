@@ -13,8 +13,12 @@ const getAllEvents = (req, res) => {
   ];
 
   return res
+   
     .status(200)
     .json(new ApiResponse(200, sampleData, "Events fetched successfully"));
+    
 };
+
+const getAllCategories =()=>{}
 
 export { getAllEvents };

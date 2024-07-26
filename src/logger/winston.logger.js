@@ -21,6 +21,7 @@ const level = () => {
 // Define different colors for each level.
 // Colors make the log message more visible,
 // adding the ability to focus or ignore messages.
+
 const colors = {
   error: "red",
   warn: "yellow",
