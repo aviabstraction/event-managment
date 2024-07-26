@@ -2,8 +2,7 @@
   "name": "event-managment",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "nodemon -r dotenv/config --experimental-json-modules src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +14,10 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongoose": "^8.4.4"
+    "mongoose": "^8.5.1",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.14",
+    "winston": "^3.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",

@@ -1,17 +1,25 @@
-import mongoose, { Schema } from "mongoose";
+const mongoose = require('mongoose');
 
-const eventSchema = new Schema(
-  {
-    eventName: {
-      type: String,
-      default: "Marriage",
-    },
-    ageLimit: {
-      type: Number,
-      default: 18,
-    },
-  },
-  { timestamps: true }
-);
+const eventSchema = new mongoose.Schema({
+    _id: Number,
+    organizationname: String,
+    eventname: String,
+    imageurl: String,
+    eventdescription: String,
+    price: Number,
+    about: String,
+    about_img: String,
+    imageurl: [String],
+    address: String,
+    whatsapp: Number,
+    mobile: Number,
+    category: String,
+    email: String,
+    rating: Number
+});
 
-export const Event = mongoose.model("Event", eventSchema);
+// export default Order;
+
+
+module.exports = mongoose.model('Event', eventSchema);
+
