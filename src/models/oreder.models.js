@@ -1,11 +1,12 @@
+import mongoose from 'mongoose';
 
-const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({
     name: String,
-     email: String,
+    email: String,
     contact: Number,
     address: String,
-    
 });
 
-module.exports= mongoose.model('Order', orderSchema);
+const Order = mongoose.model('Order', orderSchema);
+
+export default Order;

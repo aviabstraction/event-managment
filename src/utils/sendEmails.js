@@ -1,6 +1,7 @@
-const nodemailer = require("nodemailer");
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
-require("dotenv").config();
+dotenv.config();
 
 const sendEmail = async (email, subject, html) => {
   try {
@@ -16,16 +17,16 @@ const sendEmail = async (email, subject, html) => {
     });
 
     await transporter.sendMail({
-      from: "lokeshcdckap@gmail.com",
+      from: process.env.EMAIL_USER,
       to: email,
       subject: subject,
       html: html,
     });
 
-    console.log("email sent sucessfully");
+    console.log("Email sent successfully");
   } catch (error) {
-    console.log(error, "email not sent");
+    console.log(error, "Email not sent");
   }
 };
 
-module.exports = sendEmail;
+export default sendEmail;

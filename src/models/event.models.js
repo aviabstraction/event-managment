@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
     _id: Number,
@@ -9,7 +9,7 @@ const eventSchema = new mongoose.Schema({
     price: Number,
     about: String,
     about_img: String,
-    imageurl: [String],
+    imageurls: [String], // Renamed to avoid conflict with `imageurl`
     address: String,
     whatsapp: Number,
     mobile: Number,
@@ -18,8 +18,6 @@ const eventSchema = new mongoose.Schema({
     rating: Number
 });
 
-// export default Order;
+const Event = mongoose.model('Event', eventSchema);
 
-
-module.exports = mongoose.model('Event', eventSchema);
-
+export default Event;
