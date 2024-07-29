@@ -3,12 +3,19 @@ import express from "express";
 import dotenv from "dotenv";
 import morganMiddleware from "./logger/morgan.logger.js";
 import connectDB from "./db/index.js";
+import mongoose from "mongoose";
+
+const PORT = process.env.PORT || 2000;
 
 dotenv.config({
   path: "./.env",
 });
 
 const app = express();
+// Middleware
+app.use(cors());
+app.use(express.json());
+const apiBasePath = "/api";
 
 // global middlewares
 app.use(
@@ -28,10 +35,10 @@ app.use(express.static("public")); // configure static file to save images local
 app.use(morganMiddleware);
 
 //Define all API's needed for the APP here
-import eventRouter from "./routes/event.routes.js";
+import eventRoute from '../src/routes/event.routes.js';
 import packageRouter from "./routes/package.routes.js";
 
-app.use("/api/allevents", eventRouter);
+app.use(`${apiBasePath}/event`, eventRoute);
 app.use("/api/allpackages", packageRouter);
 
 // Default home page route
@@ -44,9 +51,11 @@ app.use("/", (req, res) => {
           `);
 });
 
+
 //Establishing connect to DB
 
 connectDB()
+
   .then(() => {
     // startServer();
     app.listen(process.env.PORT || 8080, () => {
@@ -56,3 +65,13 @@ connectDB()
   .catch((err) => {
     console.log("Mongo db connect error: ", err);
   });
+
+  //Connect to MongoDB using the connection URL from the .env file
+// mongoose.connect(process.env.MONGO_URI)
+// .then(() => console.log("MongoDB connected"))
+// .catch((err) => console.error("MongoDB connection error:", err));
+
+// // Start the server
+// app.listen(PORT, () => {
+//   console.log(`Server is running on http://localhost:${PORT}`);
+// });
