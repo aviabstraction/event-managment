@@ -16,14 +16,19 @@ const getAllPackages = async(req, res) => {
   
     try{
         const Packages = await Package.find(req.query)
+
+        if (!Packages || Packages.length === 0) {
+            throw new ApiError(404, null,"Package does not exist");
+          }
         return res
         .status(200)
-        .json(new ApiResponse(200, Packages, "Events fetched successfully"));
-    }catch{
+        .json(new ApiResponse(200, Packages, "package fetched successfully"));
+
+    }catch  {
         return res
-        .status(404)
-        .json(new ApiError(404, "EventId does not exist"))
-    }
+          .status( 500)
+          .json(new ApiError( 500,null,'Internal Server Error ,provide value credentials'));
+      }
     
   };
   
