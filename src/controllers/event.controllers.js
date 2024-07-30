@@ -1,21 +1,18 @@
 import Event from '../models/event.models.js'; // Ensure the correct path and file extension
 import Order from '../models/oreder.models.js'; // Ensure the correct path and file extension
-import mongoose from 'mongoose';
-import nodemailer from 'nodemailer';
-import cors from 'cors';
-import path from 'path';
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { ApiError } from "../utils/ApiError.js";
 import sendEmail from '../utils/sendEmails.js';
 
  // Ensure the correct path and file extension
 
 // require('dotenv').config();
-
 export const getEvents = async (req, res) => {
   try {
     const events = await Event.find();
-    res.json(events);
+    res.status(200).json(new ApiResponse(200, events));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(new ApiError(500, error.message));
   }
 };
 
@@ -25,12 +22,12 @@ export const getcategory = async (req, res) => {
     const events = await Event.find({ category });
 
     if (events.length === 0) {
-      return res.status(404).json({ message: 'No events found in this category' });
+      return res.status(404).json(new ApiError(404, 'No events found in this category'));
     }
 
-    res.json(events);
+    res.status(200).json(new ApiResponse(200, events));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(new ApiError(500, error.message));
   }
 };
 
@@ -40,12 +37,12 @@ export const getEventById = async (req, res) => {
     const event = await Event.findById(eventId);
 
     if (!event) {
-      return res.status(404).json({ message: 'Event not found' });
+      return res.status(404).json(new ApiError(404, 'Event not found'));
     }
 
-    res.json(event);
+    res.status(200).json(new ApiResponse(200, event));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(new ApiError(500, error.message));
   }
 };
 
@@ -62,14 +59,14 @@ export const createEvent = async (req, res) => {
     mobile: req.body.mobile,
     category: req.body.category,
     email: req.body.email,
-    rating: req.body.rating
+    rating: req.body.rating,
   });
 
   try {
     const newEvent = await event.save();
-    res.status(201).json(newEvent);
+    res.status(201).json(new ApiResponse(201, newEvent, "Event created successfully"));
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json(new ApiError(400, error.message));
   }
 };
 
@@ -88,9 +85,9 @@ export const orderEmail = async (req, res) => {
 
     await sendEmail(order.email, "Order Confirmation", emailTemplate);
 
-    res.status(201).json({ message: 'Order placed successfully and email sent.' });
+    res.status(201).json(new ApiResponse(201, null, 'Order placed successfully and email sent.'));
   } catch (error) {
     console.error('Error processing order:', error);
-    res.status(500).json({ message: 'Error processing order', error: error.message });
+    res.status(500).json(new ApiError(500, 'Error processing order', error.message));
   }
 };
