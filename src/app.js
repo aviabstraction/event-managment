@@ -38,7 +38,7 @@ app.use(morganMiddleware);
 import eventRoute from '../src/routes/event.routes.js';
 import packageRouter from "./routes/package.routes.js";
 
-app.use(`${apiBasePath}/event`, eventRoute);
+app.use(`${apiBasePath}/events`, eventRoute);
 app.use("/api/allpackages", packageRouter);
 
 // Default home page route

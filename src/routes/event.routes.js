@@ -15,7 +15,7 @@ const router = express.Router();
 // Define your routes
 router.get("/", eventController.getEvents);
 router.get("/category/:category", eventController.getcategory);
-router.get("/events/:id", eventController.getEventById);
+router.get("/:id", eventController.getEventById);
 router.post("/createEvent", eventController.createEvent);
 router.post("/orders", eventController.orderEmail);
 
