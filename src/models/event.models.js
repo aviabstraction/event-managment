@@ -9,7 +9,7 @@ const eventSchema = new mongoose.Schema({
     price: Number,
     about: String,
     about_img: String,
-    imageurls: [String], // Renamed to avoid conflict with `imageurl`
+    imageurls: [String], 
     address: String,
     whatsapp: Number,
     mobile: Number,

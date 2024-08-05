@@ -66,12 +66,3 @@ connectDB()
     console.log("Mongo db connect error: ", err);
   });
 
-  //Connect to MongoDB using the connection URL from the .env file
-// mongoose.connect(process.env.MONGO_URI)
-// .then(() => console.log("MongoDB connected"))
-// .catch((err) => console.error("MongoDB connection error:", err));
-
-// // Start the server
-// app.listen(PORT, () => {
-//   console.log(`Server is running on http://localhost:${PORT}`);
-// });

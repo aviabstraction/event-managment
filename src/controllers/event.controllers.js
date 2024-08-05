@@ -16,14 +16,10 @@ export const getEvents = async (req, res) => {
   }
 };
 
-export const getcategory = async (req, res) => {
+export const getCategory = async (req, res) => {
   try {
     const category = req.params.category;
     const events = await Event.find({ category });
-
-    if (events.length === 0) {
-      return res.status(404).json(new ApiError(404, 'No events found in this category'));
-    }
 
     res.status(200).json(new ApiResponse(200, events));
   } catch (error) {
@@ -35,10 +31,6 @@ export const getEventById = async (req, res) => {
   try {
     const eventId = req.params.id;
     const event = await Event.findById(eventId);
-
-    if (!event) {
-      return res.status(404).json(new ApiError(404, 'Event not found'));
-    }
 
     res.status(200).json(new ApiResponse(200, event));
   } catch (error) {
