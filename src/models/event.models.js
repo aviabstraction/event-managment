@@ -8,6 +8,7 @@ const eventSchema = new mongoose.Schema({
     eventdescription: String,
     price: Number,
     about: String,
+    city:String,
     about_img: String,
     imageurls: [String], 
     address: String,
