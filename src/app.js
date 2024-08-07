@@ -39,11 +39,11 @@ import eventRoute from '../src/routes/event.routes.js';
 import packageRouter from "./routes/package.routes.js";
 
 app.use(`${apiBasePath}/events`, eventRoute);
-app.use("/api/allpackages", packageRouter);
 app.use('/api', eventRoute);
-
+app.use("/api/allpackages", packageRouter);
 
 // Default home page route
+
 app.use("/", (req, res) => {
   res.send(`
           <div>
