@@ -1,1 +1,1 @@
-export const DB_NAME = "Event";
+export const DB_NAME = "eventmanagment";

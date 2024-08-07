@@ -36,12 +36,8 @@ const getAllPackages = async(req, res) => {
 const filterPackage = async (req,res)=>{
 
 try{
-
     const {city,startPrice,endPrice,packageName} = req.body
     const filterdata = await Package.find({ city: city,   totalPackagePrice: { $gte: startPrice, $lte: endPrice },   packageName: { $regex: `/${packageName}/`, $options: 'i' } })
-
-
- 
 
     if (!filterdata || Packages.length === 0) {
         throw new ApiError(404, null,"Package does not exist");
