@@ -7,6 +7,5 @@ const router = Router();
 router.route("/").get( getAllPackages );
 router.route("/filter").get( filterPackage );
 
-// router.route("/category").get( getAllCategories );
 
 export default router;
