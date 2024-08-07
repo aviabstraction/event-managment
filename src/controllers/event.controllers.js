@@ -3,6 +3,7 @@ import Order from '../models/oreder.models.js'; // Ensure the correct path and f
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import sendEmail from '../utils/sendEmails.js';
+import category from '../models/allcategory.js';
 
  // Ensure the correct path and file extension
 
@@ -59,6 +60,16 @@ export const createEvent = async (req, res) => {
     res.status(201).json(new ApiResponse(201, newEvent, "Event created successfully"));
   } catch (error) {
     res.status(400).json(new ApiError(400, error.message));
+  }
+};
+
+// Get all categories
+export const getAllCategories = async (req, res, next) => {
+  try {
+      const events = await category.find();  // Fetch all events from the database
+      res.status(200).json(new ApiResponse(200, events, 'Events fetched successfully'));
+  } catch (error) {
+      next(new ApiError(500, 'Failed to fetch events', [error.message]));
   }
 };
 
