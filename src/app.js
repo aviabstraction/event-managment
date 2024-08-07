@@ -35,6 +35,7 @@ app.use("/api/allevents", eventRouter);
 app.use("/api/allpackages", packageRouter);
 
 // Default home page route
+
 app.use("/", (req, res) => {
   res.send(`
           <div>
