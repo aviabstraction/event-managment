@@ -8,15 +8,32 @@ import category from '../models/allcategory.js';
  // Ensure the correct path and file extension
 
 // require('dotenv').config();
-export const getEvents = async (req, res) => {
+// export const getEvents = async (req, res) => {
+//   try {
+//     const events = await Event.find();
+//     res.status(200).json(new ApiResponse(200, events));
+//   } catch (error) {
+//     res.status(500).json(new ApiError(500, error.message));
+//   }
+// };
+
+export const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find();
-    res.status(200).json(new ApiResponse(200, events));
+ 
+      // Fetch events based on query parameters
+      const events = await Event.find(req.query);
+
+      // Return the found events, even if the array is empty
+      return res
+          .status(200)
+          .json(new ApiResponse(200, events, "Events fetched successfully"));
   } catch (error) {
-    res.status(500).json(new ApiError(500, error.message));
+      // Handle any errors that occur during the query
+      return res
+          .status(500)
+          .json(new ApiError(500, null, 'Internal Server Error, please provide valid credentials'));
   }
 };
-
 export const getCategory = async (req, res) => {
   try {
     const category = req.params.category;
@@ -70,6 +87,25 @@ export const getAllCategories = async (req, res, next) => {
       res.status(200).json(new ApiResponse(200, events, 'Events fetched successfully'));
   } catch (error) {
       next(new ApiError(500, 'Failed to fetch events', [error.message]));
+  }
+};
+
+// Define the filterEvents function
+export const getEventsByCityAndPrice = async (req, res) => {
+
+  try {
+    // console.log("getEventsByCityAndPrice");
+      const { category,city, price } = req.query;
+
+      const events = await Event.find({category:category, city: city, price: Number(price) });
+
+      if (events.length > 0) {
+          res.status(200).json(events);
+      } else {
+          res.status(404).json({ message: 'No events found for the given criteria.' });
+      }
+  } catch (error) {
+      res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
 
