@@ -42,6 +42,8 @@ app.use(`${apiBasePath}/events`, eventRoute);
 app.use(`${apiBasePath}/allpackages`, packageRouter);
 app.use('/api', eventRoute);
 
+
+
 // Default home page route
 
 app.use("/", (req, res) => {
@@ -52,6 +54,7 @@ app.use("/", (req, res) => {
           </div>
           `);
 });
+
 
 
 //Establishing connect to DB
@@ -67,4 +70,4 @@ connectDB()
   .catch((err) => {
     console.log("Mongo db connect error: ", err);
   });
-
+  export default app;
