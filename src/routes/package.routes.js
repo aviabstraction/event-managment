@@ -5,7 +5,7 @@ import { filterPackage, getAllPackages } from "../controllers/package.controller
 const router = Router();
 
 router.route("/").get( getAllPackages );
-router.route("/filter").get( filterPackage );
+router.route("/filterPackage").get( filterPackage );
 
 
 export default router;

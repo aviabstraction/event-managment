@@ -22,20 +22,36 @@ const getAllPackages = async(req, res) => {
 
   const filterPackage = async (req, res) => {
     try {
-        const { city, startPrice, endPrice, packageName } = req.query;
-        let filter = {};
+        const { packageName, filters } = req.query;
 
-        if (city) filter.city = city;
-        if (startPrice !== undefined && endPrice !== undefined) {
-            filter.totalPackagePrice = { $gte: parseFloat(startPrice), $lte: parseFloat(endPrice) };
-        } else if (startPrice !== undefined) {
-            filter.totalPackagePrice = { $gte: parseFloat(startPrice) };
-        } else if (endPrice !== undefined) {
-            filter.totalPackagePrice = { $lte: parseFloat(endPrice) };
+        // Check if packageName is provided
+        if (!packageName) {
+            return res.status(400).json({ message: 'packageName is required' });
         }
-        if (packageName) filter.packageName = { $regex: new RegExp(packageName, 'i') };
-          const filterdata = await Package.find(filter);
-          return res.status(200).json({ data: filterdata, message: 'Package fetched successfully' });
+
+        // Parse filters from the query (assuming it's sent as a JSON string)
+        let filterObject = filters ? JSON.parse(filters) : {};
+
+        // Start with the base filter for exact packageName match
+        let baseFilter = { packageName: packageName };
+        let filteredPackages = await Package.find(baseFilter);
+        // Apply additional filters based on the object
+        if (filterObject.category) {
+            filteredPackages = filteredPackages.filter(pkg => pkg.category === filterObject.category);
+        }
+        if (filterObject.city) {
+            filteredPackages = filteredPackages.filter(pkg => pkg.city === filterObject.city);
+        }
+        if (filterObject.startPrice !== undefined && filterObject.endPrice !== undefined) {
+            filteredPackages = filteredPackages.filter(pkg => pkg.totalPackagePrice >= parseFloat(filterObject.startPrice) && pkg.totalPackagePrice <= parseFloat(filterObject.endPrice));
+        } else if (filterObject.startPrice !== undefined) {
+            filteredPackages = filteredPackages.filter(pkg => pkg.totalPackagePrice >= parseFloat(filterObject.startPrice));
+        } else if (filterObject.endPrice !== undefined) {
+            filteredPackages = filteredPackages.filter(pkg => pkg.totalPackagePrice <= parseFloat(filterObject.endPrice));
+        }
+
+        // Return the filtered data
+        return res.status(200).json({ data: filteredPackages, message: 'Package fetched successfully' });
 
     } catch (error) {
         console.error('Error in filterPackage:', error);
