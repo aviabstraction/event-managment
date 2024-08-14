@@ -7,31 +7,21 @@ import category from '../models/allcategory.js';
 
  // Ensure the correct path and file extension
 
-// require('dotenv').config();
-// export const getEvents = async (req, res) => {
-//   try {
-//     const events = await Event.find();
-//     res.status(200).json(new ApiResponse(200, events));
-//   } catch (error) {
-//     res.status(500).json(new ApiError(500, error.message));
-//   }
-// };
 
 export const getAllEvents = async (req, res) => {
   try {
- 
-      // Fetch events based on query parameters
-      const events = await Event.find(req.query);
-
-      // Return the found events, even if the array is empty
-      return res
-          .status(200)
-          .json(new ApiResponse(200, events, "Events fetched successfully"));
+      const { city,price, category } = req.query;
+      let filter = {};
+      if (city) filter.city = city;
+      if (price !== undefined) {
+          filter.price = { $gte: 0, $lte: parseFloat(price) };
+      }
+      if (category) filter.category = category;
+      const events = await Event.find(filter);
+      return res.status(200).json(new ApiResponse(200, events, "Events fetched successfully"));
   } catch (error) {
-      // Handle any errors that occur during the query
-      return res
-          .status(500)
-          .json(new ApiError(500, null, 'Internal Server Error, please provide valid credentials'));
+      console.error('Error in getAllEvents:', error);
+      return res.status(500).json(new ApiError(500, null, "Internal Server Error"));
   }
 };
 export const getCategory = async (req, res) => {
@@ -90,27 +80,11 @@ export const getAllCategories = async (req, res, next) => {
   }
 };
 
-// Define the filterEvents function
-export const getEventsByCityAndPrice = async (req, res) => {
-
-  try {
-    // console.log("getEventsByCityAndPrice");
-      const { category,city, price } = req.query;
-
-      const events = await Event.find({category:category, city: city, price: Number(price) });
-
-      if (events.length > 0) {
-          res.status(200).json(events);
-      } else {
-          res.status(404).json({ message: 'No events found for the given criteria.' });
-      }
-  } catch (error) {
-      res.status(500).json({ message: 'Server Error', error: error.message });
-  }
-};
 
 export const orderEmail = async (req, res) => {
   try {
+    const findOrg = await Event.findById(req.params.id);
+
     const order = new Order(req.body);
     await order.save();
 
@@ -119,12 +93,22 @@ export const orderEmail = async (req, res) => {
       <p>Thank you for your order, ${order.name}!</p>
       <p>Contact Number: ${order.contact}</p>
       <p>We will ship your order to the following address:</p>
-      <p>${order.address}</p>
-    `;
+      <p>${order.address}</p>`
+    ;
 
-    await sendEmail(order.email, "Order Confirmation", emailTemplate);
+    const emailTemplateOrg = `
+    <h1>Order Confirmation</h1>
+    <p>Thank you for your order, ${findOrg.organizationname}!</p>
+    <p>Contact Number: ${findOrg.mobile}</p>
+    <p>We will ship your order to the following address:</p>
+    <p>${findOrg.address}</p>`;
 
-    res.status(201).json(new ApiResponse(201, null, 'Order placed successfully and email sent.'));
+    await sendEmail(order.email, "Order Confirmation", emailTemplateOrg);
+
+    await sendEmail(findOrg.email, "Order Confirmation", emailTemplate);
+
+
+    res.status(201).json(new ApiResponse(201, "sucess", 'Order placed successfully and email sent.'));
   } catch (error) {
     console.error('Error processing order:', error);
     res.status(500).json(new ApiError(500, 'Error processing order', error.message));

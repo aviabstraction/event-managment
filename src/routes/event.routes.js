@@ -21,10 +21,9 @@ router.get("/category/:category", eventController.getCategory);
 router.get("/:id", eventController.getEventById);
 router.post("/createEvent", eventController.createEvent);
 router.post("/orders", eventController.orderEmail);
-///filter APi
 
-// Define the route for getting events by city and price
-router.get('/events', eventController.getEventsByCityAndPrice);
+
+
 
 
 
