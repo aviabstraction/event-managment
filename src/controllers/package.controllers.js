@@ -52,8 +52,9 @@ const getAllPackages = async(req, res) => {
         } else if (filterObject.endPrice !== undefined) {
             filteredPackages = filteredPackages.filter(pkg => pkg.totalPackagePrice <= parseFloat(filterObject.endPrice));
         }
-        
 
+
+        
         // Return the filtered data
         return res.status(200).json({ data: filteredPackages, message: 'Package fetched successfully' });
 
