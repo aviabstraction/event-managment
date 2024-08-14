@@ -83,10 +83,11 @@ export const getAllCategories = async (req, res, next) => {
 
 export const orderEmail = async (req, res) => {
   try {
-    const findOrg = await Event.findById(req.params.id);
+    
 
     const order = new Order(req.body);
     await order.save();
+    const findOrg = await Event.findById(req.params.id);
 
     const emailTemplate = `
       <h1>Order Confirmation</h1>
