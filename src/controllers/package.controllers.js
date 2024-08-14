@@ -22,18 +22,21 @@ const getAllPackages = async(req, res) => {
 
   const filterPackage = async (req, res) => {
     try {
-        const { packageName, filters } = req.query;
+        const { category
+, filters } = req.query;
 
-        // Check if packageName is provided
-        if (!packageName) {
-            return res.status(400).json({ message: 'packageName is required' });
+         // Check if category is provided
+        if (!category
+) {
+            return res.status(400).json({ message: 'Category is required' });
         }
 
         // Parse filters from the query (assuming it's sent as a JSON string)
         let filterObject = filters ? JSON.parse(filters) : {};
 
-        // Start with the base filter for exact packageName match
-        let baseFilter = { packageName: packageName };
+        // Start with the base filter for exact category match
+        let baseFilter = { category: category };
+        
         let filteredPackages = await Package.find(baseFilter);
         // Apply additional filters based on the object
         if (filterObject.category) {
