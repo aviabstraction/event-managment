@@ -149,7 +149,7 @@ export const orderEmail = async (req, res) => {
     const findOrg = await Event.findById(req.params.id);
 
     // Email template for the user with the organizer's details
-    const emailTemplateUser = `
+    const wemailTemplateUser = `
       <div style="font-family: Arial, sans-serif; color: #333;">
         <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
           <h1 style="color: #007bff;">Order Confirmation</h1>
@@ -193,7 +193,6 @@ export const orderEmail = async (req, res) => {
         </div>
       </div>
     `;
-
     // Send the emails
     await sendEmail(order.email, "Order Confirmation", emailTemplateUser);
     await sendEmail(findOrg.email, "New Order Notification", emailTemplateOrg);

@@ -7,14 +7,16 @@ import { ApiError } from "../utils/ApiError.js";
 
 const filterPackage = async (req, res) => {
     try {
-        const { category, city, startPrice, endPrice } = req.query;
+        const { category, city, startPrice, endPrice,_id } = req.query;
 
         let baseFilter = {};
 
         if (category) {
             baseFilter.category = category;
         }
-
+        if (_id) {
+            baseFilter._id = _id;
+        }
         if (city) {
             baseFilter.city = city;
         }
