@@ -90,14 +90,37 @@ export const orderEmail = async (req, res) => {
     const findOrg = await Event.findById(req.params.id);
 
     const emailTemplate = `
+<<<<<<< HEAD
       <h1>Order Confirmation</h1>
       <p>Thank you for your order, ${order.name}!</p>
       <p>Contact Number: ${order.contact}</p>
       <p>We will ship your order to the following address:</p>
       <p>${order.address}</p>`
     ;
+=======
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+          <h1 style="color: #007bff;">Order Confirmation</h1>
+          <h2> Subject: New Order Received</h2>
+          <p>Dear ${order.name},</p>
+          <p>TThank you for your order!We are excited to confirm your booking for the following event:<p>
+          <p><strong>Contact Number:</strong> ${order.contact}</p>
+          <p>We will ship your order to the following address:</p>
+          <p style="background-color: #e9ecef; padding: 10px; border-radius: 5px;">
+            ${order.address}
+          </p>
+          <p>You can <a href="https://tracking-link.com/${order._id}" style="color: #007bff; text-decoration: none;">track your order online</a>.</p>
+          <a href="https://tracking-link.com/${order._id}" 
+             style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 16px; color: #ffffff; background-color: #28a745; text-align: center; text-decoration: none; border-radius: 5px;">
+             Track Your Order
+          </a>
+        </div>
+      </div>
+    `;
+>>>>>>> ef74ab2c3c4e5ec38e1e45b3e2048a6f1364e0eb
 
     const emailTemplateOrg = `
+<<<<<<< HEAD
     <h1>Order Confirmation</h1>
     <p>Thank you for your order, ${findOrg.organizationname}!</p>
     <p>Contact Number: ${findOrg.mobile}</p>
@@ -105,6 +128,31 @@ export const orderEmail = async (req, res) => {
     <p>${findOrg.address}</p>`;
 
     await sendEmail(order.email, "Order Confirmation", emailTemplateOrg);
+=======
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+          <h1 style="color: #dc3545;">Order Confirmation</h1>
+          <h2 style="color: black; font-size:>Subject: Your Order Confirmation</h2>
+          <p>Dear ${findOrg.organizationname},</p>
+          <p>We are pleased to inform you that a new order has been booked for your event. Please find the order details below:!</p>
+          <p><strong>Contact Number:</strong> ${findOrg.mobile}</p>
+          <p>We will ship your order to the following address:</p>
+          <p style="background-color: #e9ecef; padding: 10px; border-radius: 5px;">
+            ${findOrg.address}
+          </p>
+          <p>You can view more details about your order on our <a href="https://organization-website.com/orders/${order._id}" style="color: #007bff; text-decoration: none;">website</a>.</p>
+          <a href="https://organization-website.com/orders/${order._id}" 
+             style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;">
+             View Order Details
+          </a>
+        </div>
+      </div>
+    `;
+
+   
+    await sendEmail(order.email, "Order Confirmation", emailTemplateOrg);
+    await sendEmail(findOrg.email, "Order Confirmation",emailTemplate );
+>>>>>>> ef74ab2c3c4e5ec38e1e45b3e2048a6f1364e0eb
 
     await sendEmail(findOrg.email, "Order Confirmation", emailTemplate);
 
