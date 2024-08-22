@@ -92,9 +92,9 @@ export const orderEmail = async (req, res) => {
       <div style="font-family: Arial, sans-serif; color: #333;">
         <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
           <h1 style="color: #007bff;">Order Confirmation</h1>
-          <img src="${findOrg.imageUrl}" alt="${findOrg.organizationname} logo" style="width: 100px; height: auto; margin-bottom: 20px;">
+          <h2> Subject: New Order Received</h2>
           <p>Dear ${order.name},</p>
-          <p>Thank you for your order!</p>
+          <p>TThank you for your order!We are excited to confirm your booking for the following event:<p>
           <p><strong>Contact Number:</strong> ${order.contact}</p>
           <p>We will ship your order to the following address:</p>
           <p style="background-color: #e9ecef; padding: 10px; border-radius: 5px;">
@@ -114,9 +114,9 @@ export const orderEmail = async (req, res) => {
       <div style="font-family: Arial, sans-serif; color: #333;">
         <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
           <h1 style="color: #dc3545;">Order Confirmation</h1>
-          <img src="${findOrg.imageUrl}" alt="${findOrg.organizationname} logo" style="width: 100px; height: auto; margin-bottom: 20px;">
+          <h2 style="color: black; font-size:>Subject: Your Order Confirmation</h2>
           <p>Dear ${findOrg.organizationname},</p>
-          <p>Thank you for your order!</p>
+          <p>We are pleased to inform you that a new order has been booked for your event. Please find the order details below:!</p>
           <p><strong>Contact Number:</strong> ${findOrg.mobile}</p>
           <p>We will ship your order to the following address:</p>
           <p style="background-color: #e9ecef; padding: 10px; border-radius: 5px;">
@@ -132,8 +132,8 @@ export const orderEmail = async (req, res) => {
     `;
 
    
-    await sendEmail(order.email, "Order Confirmation", emailTemplate);
-    await sendEmail(findOrg.email, "Order Confirmation", emailTemplateOrg);
+    await sendEmail(order.email, "Order Confirmation", emailTemplateOrg);
+    await sendEmail(findOrg.email, "Order Confirmation",emailTemplate );
 
     res.status(201).json(new ApiResponse(201, "success", 'Order placed successfully and email sent.'));
   } catch (error) {
