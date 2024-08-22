@@ -37,10 +37,13 @@ app.use(morganMiddleware);
 //Define all API's needed for the APP here
 import eventRoute from '../src/routes/event.routes.js';
 import packageRouter from "./routes/package.routes.js";
+import authRoutes from './routes/authRoutes.js';
 
 app.use(`${apiBasePath}/events`, eventRoute);
 app.use(`${apiBasePath}/allpackages`, packageRouter);
 app.use('/api', eventRoute);
+// Routes
+app.use('/api/auth', authRoutes);
 
 
 
