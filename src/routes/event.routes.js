@@ -20,7 +20,7 @@ router.get('/categories',eventController.getAllCategories);
 router.get("/category/:category", eventController.getCategory);
 router.get("/:id", eventController.getEventById);
 router.post("/createEvent", eventController.createEvent);
-router.post("/orders/:id", eventController.orderEmail);
+router.post("/orders", eventController.orderEmail);
 
 
 
