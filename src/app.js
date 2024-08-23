@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import morganMiddleware from "./logger/morgan.logger.js";
 import connectDB from "./db/index.js";
 import mongoose from "mongoose";
+import bodyParser from 'body-parser';
+
 
 const PORT = process.env.PORT || 2000;
 
@@ -33,18 +35,21 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public")); // configure static file to save images locally
 
 app.use(morganMiddleware);
+// Middleware
+app.use(bodyParser.json());
 
 //Define all API's needed for the APP here
 import eventRoute from '../src/routes/event.routes.js';
 import packageRouter from "./routes/package.routes.js";
-import authRoutes from './routes/authRoutes.js';
+import userRouter from './routes/authRoutes.js';
 
 app.use(`${apiBasePath}/events`, eventRoute);
 app.use(`${apiBasePath}/allpackages`, packageRouter);
 app.use('/api', eventRoute);
-// Routes
-app.use('/api/auth', authRoutes);
 
+
+
+app.use('/api', userRouter);
 
 
 // Default home page route

@@ -1,9 +1,14 @@
+
+import { signUp,login,getAllOrganizer} from '../controllers/authController.js';
 import express from 'express';
-import { signup, login } from '../controllers/authController.js';
+import { verifyToken } from '../utils/generateToken.js';
 
 const router = express.Router();
 
-router.post('/signup', signup);
+// Define routes
+router.get('/allusers', verifyToken, getAllOrganizer );
+router.post('/signup', signUp);
 router.post('/login', login);
 
+// Export the router as the default export
 export default router;
