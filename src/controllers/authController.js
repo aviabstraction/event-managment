@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import User from '../models/User.js';
+import organizer from '../models/organizer.models.js';
 import jwt from 'jsonwebtoken';
 
 
@@ -16,7 +16,7 @@ export const signUp = async (req, res) => {
       }
   
       // Check If User Exists In The Database
-      const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+      const existingUser = await organizer.findOne({ $or: [{ username }, { email }] });
   
       if (existingUser) {
         return res.status(400).json({ message: "User with this username or email already exists" });
@@ -27,7 +27,7 @@ export const signUp = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, saltRounds);
   
       // Save The User To The Database
-      const newUser = new User({
+      const newUser = new organizer({
         username,
         email,
         password: hashedPassword,
@@ -46,7 +46,8 @@ export const signUp = async (req, res) => {
 
   export const login = async (req, res) => {
     try {
-      const { username, password } = req.body;
+      const { username, password} = req.body;
+      
   
       // Check if the input fields are valid
       if (!username || !password) {
@@ -56,17 +57,17 @@ export const signUp = async (req, res) => {
       }
   
       // Check if the user exists in the database
-      const user = await User.findOne({ username });
+      const user = await organizer.findOne({ username });
   
       if (!user) {
-        return res.status(401).json({ message: 'Invalid username or password' });
+        return res.status(401).json({ message: 'Invalid username ' });
       }
   
       // Compare passwords
       const passwordMatch = await bcrypt.compare(password, user.password);
   
       if (!passwordMatch) {
-        return res.status(401).json({ message: 'Invalid username or password' });
+        return res.status(401).json({ message: 'Invalid  password' });
       }
   
       // Generate JWT token
@@ -89,7 +90,7 @@ export const signUp = async (req, res) => {
   export const getAllOrganizer = async (req, res) => {
     try {
       // Retrieve all users from the database
-      const users = await User.find({}, { password: 0 }); // Exclude the password field from the response
+      const users = await organizer.find({}, { password: 0 }); // Exclude the password field from the response
   
       return res.status(200).json({ users });
     } catch (error) {
