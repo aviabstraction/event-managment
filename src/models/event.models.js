@@ -9,6 +9,7 @@ const eventSchema = new mongoose.Schema({
     price: Number,
     about: String,
     city:String,
+    tagline: String,
     about_img: String,
     imageurl: [String], 
     address: String,
@@ -16,7 +17,7 @@ const eventSchema = new mongoose.Schema({
     mobile: Number,
     category: String,
     email: String,
-    rating: Number
+    
 });
 
 const Event = mongoose.model('Event', eventSchema);

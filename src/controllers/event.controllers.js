@@ -66,15 +66,20 @@ export const createEvent = async (req, res) => {
     
     organizationname: req.body.organizationname,
     eventname: req.body.eventname,
-    imageurl: req.body.imageurl,
+    imageUrl: req.body.imageUrl,
     eventdescription: req.body.eventdescription,
     price: req.body.price,
+    city: req.body.city,
+    tagline: req.body.tagline,
+    about_img: req.body.about_img,
+    about: req.body.about,
+    imageurl: req.body.imageurl,  // Array of images for the event page
     address: req.body.address,
     whatsapp: req.body.whatsapp,
     mobile: req.body.mobile,
     category: req.body.category,
     email: req.body.email,
-    rating: req.body.rating,
+    
   });
 
   try {
