@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 const eventSchema = new mongoose.Schema({
   
     organizationname: String,
-    eventname: String,
+    eventName: String,
     imageUrl: String,
-    eventdescription: String,
+    eventDescription: String,
     price: Number,
     about: String,
     city:String,

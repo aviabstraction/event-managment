@@ -65,9 +65,9 @@ export const createEvent = async (req, res) => {
   const event = new Event({
     
     organizationname: req.body.organizationname,
-    eventname: req.body.eventname,
+    eventName: req.body.eventName,
     imageUrl: req.body.imageUrl,
-    eventdescription: req.body.eventdescription,
+    eventDescription: req.body.eventDescription,
     price: req.body.price,
     city: req.body.city,
     tagline: req.body.tagline,
