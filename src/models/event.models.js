@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
-    _id: Number,
+  
     organizationname: String,
     eventname: String,
     imageUrl: String,
