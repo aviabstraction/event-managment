@@ -2,12 +2,12 @@
 
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+const organizerSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 });
 
-const User = mongoose.model('User', userSchema);
+const organizer = mongoose.model('organizer', organizerSchema);
 
-export default User;
+export default organizer;
