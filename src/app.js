@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import morganMiddleware from "./logger/morgan.logger.js";
 import connectDB from "./db/index.js";
 
-import mongoose from "mongoose";
 import bodyParser from 'body-parser';
 
 import multer from 'multer';
@@ -20,7 +19,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
 
 
 const PORT = process.env.PORT || 2000;

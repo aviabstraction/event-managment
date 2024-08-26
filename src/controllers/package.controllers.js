@@ -51,7 +51,6 @@ const createPackage = async (req, res) => {
     try {
     const {
         organizationName,
-        customised,
         packageName,
         packageTagline,
         packageDescription,
@@ -99,7 +98,6 @@ const createPackage = async (req, res) => {
 
     const newPackage = {
         organizationName,
-        customised,
         packageName,
         packageTagline,
         packageDescription,
