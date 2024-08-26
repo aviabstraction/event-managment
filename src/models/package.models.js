@@ -1,6 +1,7 @@
 
 import mongoose ,{Schema} from "mongoose";
 
+
 const packages = new mongoose.Schema(
     {
     
@@ -18,14 +19,13 @@ const packages = new mongoose.Schema(
     }],
     totalPackagePrice: { type: Number, required: true },
     address: { type: String, required: true },
-    whatsapp: { type: Number, required: true },
-    mobile: { type: Number, required: true },
+    whatsapp: { type: String, required: true },
+    mobile: { type: String, required: true },
     category: { type: String, required: true },
     email: { type: String, required: true },
     rating: { type: Number, required: true },
     experience:{ type: Number, required: true },
     city:{ type: String, required: true }
-
 }
 )
 

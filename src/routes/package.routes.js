@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { filterPackage } from "../controllers/package.controllers.js";
+import { filterPackage ,createPackage } from "../controllers/package.controllers.js";
 
 
 const router = Router();
 
-// router.route("/").get( getAllPackages );
+
  router.route("/").get( filterPackage );
+ router.route("/create").post( createPackage );
+
 export default router;

@@ -3,8 +3,24 @@ import express from "express";
 import dotenv from "dotenv";
 import morganMiddleware from "./logger/morgan.logger.js";
 import connectDB from "./db/index.js";
+<<<<<<< Updated upstream
 import mongoose from "mongoose";
 import bodyParser from 'body-parser';
+=======
+import multer from 'multer';
+import path from 'path';
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
+>>>>>>> Stashed changes
 
 
 const PORT = process.env.PORT || 2000;
@@ -34,6 +50,8 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public")); // configure static file to save images locally
 
+// app.use("/api/packages", upload.fields([{ name: 'packageImage' }, { name: 'eventPhotos' }]), packageRouter);
+
 app.use(morganMiddleware);
 // Middleware
 app.use(bodyParser.json());
@@ -44,7 +62,7 @@ import packageRouter from "./routes/package.routes.js";
 import userRouter from './routes/authRoutes.js';
 
 app.use(`${apiBasePath}/events`, eventRoute);
-app.use(`${apiBasePath}/allpackages`, packageRouter);
+app.use(`${apiBasePath}/allpackages`,upload.any(), packageRouter);
 app.use('/api', eventRoute);
 
 
