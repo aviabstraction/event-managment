@@ -3,10 +3,10 @@ import express from "express";
 import dotenv from "dotenv";
 import morganMiddleware from "./logger/morgan.logger.js";
 import connectDB from "./db/index.js";
-<<<<<<< Updated upstream
+
 import mongoose from "mongoose";
 import bodyParser from 'body-parser';
-=======
+
 import multer from 'multer';
 import path from 'path';
 
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
->>>>>>> Stashed changes
+
 
 
 const PORT = process.env.PORT || 2000;

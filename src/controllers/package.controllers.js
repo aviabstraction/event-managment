@@ -116,6 +116,9 @@ const createPackage = async (req, res) => {
         packagesLists
     };
 
+    console.log(newPackage);
+    
+
     const packageData = new Package(newPackage);
 
     packageData.save()
