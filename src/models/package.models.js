@@ -6,7 +6,6 @@ const packages = new mongoose.Schema(
     {
     
     organizationName: { type: String, required: true },
-    customised: { type: String, required: true, enum: ['yes', 'no'] },
     packageName: { type: String, required: true },
     packageTagline: { type: String, required: true },
     packageImage: { type: String, required: true },
