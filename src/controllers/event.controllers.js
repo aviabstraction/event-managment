@@ -2,7 +2,6 @@ import Event from '../models/event.models.js'; // Ensure the correct path and fi
 import Order from '../models/oreder.models.js'; // Ensure the correct path and file extension
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
-
 import sendEmail from '../utils/sendEmails.js';
 import category from '../models/allcategory.js';
 
@@ -61,7 +60,11 @@ export const getEventById = async (req, res) => {
   }
 };
 //create a new event in the database
+
 export const createEvent = async (req, res) => {
+
+    
+
   try {
     const {
       organizationname,
@@ -113,26 +116,14 @@ export const createEvent = async (req, res) => {
     // Respond with the created event
     res.status(201).json(savedEvent);
   } catch (error) {
-    console.error("Error creating event:", error);
-    res.status(500).json({ message: "Failed to create event", error });
-  }
-};
-
-  // Update an event
-export const updateEvent = async (req, res) => {
-  try {
-    const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedEvent) return res.status(404).json({ message: "Event not found" });
-    res.status(200).json(updatedEvent);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json(new ApiError(400, error.message));
   }
 };
 
 // Get all categories
 export const getAllCategories = async (req, res, next) => {
   try {
-      const events = await category.find();  
+      const events = await category.find();  // Fetch all events from the database
       res.status(200).json(new ApiResponse(200, events, 'Events fetched successfully'));
   } catch (error) {
       next(new ApiError(500, 'Failed to fetch events', [error.message]));
