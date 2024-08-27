@@ -4,25 +4,10 @@ import * as eventController from '../controllers/event.controllers.js';
 // import { getEvents, getcategory, getEventById, createEvent, orderEmail } from './controllers/event.controllers.js';
 
 
-// import multer from 'multer';
-// import path from 'path';
+
 
 const router = express.Router();
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'public/uploads/');
-  
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + path.extname(file.originalname));
-//   }
-// });
-
-// const upload = multer({ storage });
-
-// Optionally, if you have a default export in your controller file, you can use:
-// import eventController from '../controllers/event.controllers.js';
 
 dotenv.config();
 

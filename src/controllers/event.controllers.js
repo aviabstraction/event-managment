@@ -62,9 +62,6 @@ export const getEventById = async (req, res) => {
 //create a new event in the database
 
 export const createEvent = async (req, res) => {
-
-    
-
   try {
     const {
       organizationname,
@@ -81,15 +78,28 @@ export const createEvent = async (req, res) => {
       email,
     } = req.body;
 
-    // Initialize the array to store image paths
-    let imagePaths = [];
+    // Initialize variables for images
+    let imageUrl = '';
+    let about_img = '';
+    let imageUrls = [];
 
     // Check if files are uploaded
-    if (req.files && req.files.length > 0) {
-      // Collect paths of up to 3 uploaded files
-      imagePaths = req.files.slice(0, 4).map(file => file.path);
+    if (req.files) {
+      // Assign the first uploaded image to imageUrl
+      if (req.files['imageUrl']) {
+        imageUrl = req.files['imageUrl'][0].path;
+      }
+
+      // Assign the second uploaded image to about_img
+      if (req.files['about_img']) {
+        about_img = req.files['about_img'][0].path;
+      }
+
+      // Collect paths of multiple uploaded images for imageurls
+      if (req.files['imageurls']) {
+        imageUrls = req.files['imageurls'].map(file => file.path);
+      }
     }
-    console.log(req.files[0].path);
 
     // Create a new event with the file paths and other data
     const newEvent = new Event({
@@ -98,13 +108,13 @@ export const createEvent = async (req, res) => {
       eventDescription,
       price,
       about,
-      address,
-      whatsapp,
       city,
       tagline,
-      imageUrl: imagePaths[0] || null, 
-      about_img: imagePaths[0] || null, 
-      imageurl: imagePaths, 
+      imageUrl: imageUrl || null,  // Store single image for imageURL
+      about_img: about_img || null, // Store single image for about_img
+      imageurls: imageUrls,         // Store multiple images
+      address,
+      whatsapp,
       mobile,
       category,
       email,

@@ -54,12 +54,22 @@ app.use(morganMiddleware);
 // Middleware
 app.use(bodyParser.json());
 
+// Define the fields for file uploads
+const uploadFields = upload.fields([
+  { name: 'imageUrl', maxCount: 1 },   // Single file for imageURL
+  { name: 'about_img', maxCount: 1 },  // Single file for about_img
+  { name: 'imageurls', maxCount: 4}  // Multiple files for imageurls
+]);
+
+
+
 //Define all API's needed for the APP here
 import eventRoute from '../src/routes/event.routes.js';
 import packageRouter from "./routes/package.routes.js";
 import userRouter from './routes/authRoutes.js';
 
-app.use(`${apiBasePath}/events`,upload.any(),eventRoute);
+
+app.use(`${apiBasePath}/events`,uploadFields,eventRoute);
 app.use(`${apiBasePath}/allpackages`,upload.any(), packageRouter);
 app.use('/api', eventRoute);
 

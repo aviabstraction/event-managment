@@ -11,7 +11,7 @@ const eventSchema = new mongoose.Schema({
     city:String,
     tagline: String,
     about_img: String,
-    imageurl: [String], 
+    imageurls: [String], 
     address: String,
     whatsapp: Number,
     mobile: Number,
