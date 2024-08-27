@@ -85,6 +85,7 @@ export const createEvent = async (req, res) => {
       // Collect paths of up to 3 uploaded files
       imagePaths = req.files.slice(0, 4).map(file => file.path);
     }
+    console.log(req.files[0].path);
 
     // Create a new event with the file paths and other data
     const newEvent = new Event({
