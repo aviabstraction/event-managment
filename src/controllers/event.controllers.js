@@ -62,29 +62,56 @@ export const getEventById = async (req, res) => {
 //create a new event in the database
 
 export const createEvent = async (req, res) => {
-  const event = new Event({
+
     
-    organizationname: req.body.organizationname,
-    eventName: req.body.eventName,
-    imageUrl: req.body.imageUrl,
-    eventDescription: req.body.eventDescription,
-    price: req.body.price,
-    city: req.body.city,
-    tagline: req.body.tagline,
-    about_img: req.body.about_img,
-    about: req.body.about,
-    imageurl: req.body.imageurl,  // Array of images for the event page
-    address: req.body.address,
-    whatsapp: req.body.whatsapp,
-    mobile: req.body.mobile,
-    category: req.body.category,
-    email: req.body.email,
-    
-  });
 
   try {
-    const newEvent = await event.save();
-    res.status(201).json(new ApiResponse(201, newEvent, "Event created successfully"));
+    const {
+      organizationname,
+      eventName,
+      eventDescription,
+      price,
+      about,
+      city,
+      tagline,
+      address,
+      mobile,
+      category,
+      email,
+    } = req.body;
+
+    // Initialize the array to store image paths
+    let imagePaths = [];
+
+    // Check if files are uploaded
+    if (req.files && req.files.length > 0) {
+      // Collect paths of up to 3 uploaded files
+      imagePaths = req.files.slice(0, 4).map(file => file.path);
+    }
+    console.log(req.files[0].path);
+
+    // Create a new event with the file paths and other data
+    const newEvent = new Event({
+      organizationname,
+      eventName,
+      eventDescription,
+      price,
+      about,
+      city,
+      tagline,
+      imageUrl: imagePaths[0] || null, 
+      about_img: imagePaths[0] || null, 
+      imageurl: imagePaths, 
+      mobile,
+      category,
+      email,
+    });
+
+    // Save the event to the database
+    const savedEvent = await newEvent.save();
+
+    // Respond with the created event
+    res.status(201).json(savedEvent);
   } catch (error) {
     res.status(400).json(new ApiError(400, error.message));
   }
