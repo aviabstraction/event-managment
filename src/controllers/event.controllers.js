@@ -2,6 +2,7 @@ import Event from '../models/event.models.js'; // Ensure the correct path and fi
 import Order from '../models/oreder.models.js'; // Ensure the correct path and file extension
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
+
 import sendEmail from '../utils/sendEmails.js';
 import category from '../models/allcategory.js';
 
@@ -60,40 +61,74 @@ export const getEventById = async (req, res) => {
   }
 };
 //create a new event in the database
-
 export const createEvent = async (req, res) => {
-  const event = new Event({
-    
-    organizationname: req.body.organizationname,
-    eventName: req.body.eventName,
-    imageUrl: req.body.imageUrl,
-    eventDescription: req.body.eventDescription,
-    price: req.body.price,
-    city: req.body.city,
-    tagline: req.body.tagline,
-    about_img: req.body.about_img,
-    about: req.body.about,
-    imageurl: req.body.imageurl,  // Array of images for the event page
-    address: req.body.address,
-    whatsapp: req.body.whatsapp,
-    mobile: req.body.mobile,
-    category: req.body.category,
-    email: req.body.email,
-    
-  });
-
   try {
-    const newEvent = await event.save();
-    res.status(201).json(new ApiResponse(201, newEvent, "Event created successfully"));
+    const {
+      organizationname,
+      eventName,
+      eventDescription,
+      price,
+      about,
+      city,
+      tagline,
+      address,
+      mobile,
+      category,
+      email,
+    } = req.body;
+
+    // Initialize the array to store image paths
+    let imagePaths = [];
+
+    // Check if files are uploaded
+    if (req.files && req.files.length > 0) {
+      // Collect paths of up to 3 uploaded files
+      imagePaths = req.files.slice(0, 4).map(file => file.path);
+    }
+
+    // Create a new event with the file paths and other data
+    const newEvent = new Event({
+      organizationname,
+      eventName,
+      eventDescription,
+      price,
+      about,
+      city,
+      tagline,
+      imageUrl: imagePaths[0] || null, 
+      about_img: imagePaths[0] || null, 
+      imageurl: imagePaths, 
+      mobile,
+      category,
+      email,
+    });
+
+    // Save the event to the database
+    const savedEvent = await newEvent.save();
+
+    // Respond with the created event
+    res.status(201).json(savedEvent);
   } catch (error) {
-    res.status(400).json(new ApiError(400, error.message));
+    console.error("Error creating event:", error);
+    res.status(500).json({ message: "Failed to create event", error });
+  }
+};
+
+  // Update an event
+export const updateEvent = async (req, res) => {
+  try {
+    const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updatedEvent) return res.status(404).json({ message: "Event not found" });
+    res.status(200).json(updatedEvent);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
 
 // Get all categories
 export const getAllCategories = async (req, res, next) => {
   try {
-      const events = await category.find();  // Fetch all events from the database
+      const events = await category.find();  
       res.status(200).json(new ApiResponse(200, events, 'Events fetched successfully'));
   } catch (error) {
       next(new ApiError(500, 'Failed to fetch events', [error.message]));

@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage });
+ const upload = multer({ storage });
 
 
 const PORT = process.env.PORT || 2000;
@@ -59,7 +59,7 @@ import eventRoute from '../src/routes/event.routes.js';
 import packageRouter from "./routes/package.routes.js";
 import userRouter from './routes/authRoutes.js';
 
-app.use(`${apiBasePath}/events`, eventRoute);
+app.use(`${apiBasePath}/events`,upload.any(),eventRoute);
 app.use(`${apiBasePath}/allpackages`,upload.any(), packageRouter);
 app.use('/api', eventRoute);
 
