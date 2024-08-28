@@ -81,7 +81,7 @@ export const createEvent = async (req, res) => {
     // Initialize variables for images
     let imageUrl = '';
     let about_img = '';
-    let imageUrls = [];
+    let imageurl = [];
 
     // Check if files are uploaded
     if (req.files) {
@@ -96,8 +96,8 @@ export const createEvent = async (req, res) => {
       }
 
       // Collect paths of multiple uploaded images for imageurls
-      if (req.files['imageurls']) {
-        imageUrls = req.files['imageurls'].map(file => file.path);
+      if (req.files['imageurl']) {
+        imageurl = req.files['imageurl'].map(file => file.path);
       }
     }
 
@@ -112,7 +112,7 @@ export const createEvent = async (req, res) => {
       tagline,
       imageUrl: imageUrl || null,  // Store single image for imageURL
       about_img: about_img || null, // Store single image for about_img
-      imageurls: imageUrls,         // Store multiple images
+      imageurl: imageurl,         // Store multiple images
       address,
       whatsapp,
       mobile,

@@ -58,7 +58,7 @@ app.use(bodyParser.json());
 const uploadFields = upload.fields([
   { name: 'imageUrl', maxCount: 1 },   // Single file for imageURL
   { name: 'about_img', maxCount: 1 },  // Single file for about_img
-  { name: 'imageurls', maxCount: 4}  // Multiple files for imageurls
+  { name: 'imageurl', maxCount: 4}  // Multiple files for imageurls
 ]);
 
 
