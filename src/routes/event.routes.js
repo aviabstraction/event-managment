@@ -24,9 +24,9 @@ router.get("/:id", eventController.getEventById);
 router.post("/orders", eventController.orderEmail);
 // Route for creating a new event with multiple images
 router.post('/eventCreate',eventController.createEvent);
-  //update event
-  // router.put('/:id', eventController.updateEvent);
-
+  
+// Route to handle sending an email
+router.post('/contactemail',eventController.sendEmailcontact);
 
 
 
